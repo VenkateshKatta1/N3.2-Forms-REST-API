@@ -13,10 +13,21 @@ app.use(express.json());
 // Serve files from the public folder
 app.use(express.static(path.join(__dirname, "public")));
 
+function getCustomerInput(body) {
+    body = body || {};
+    const name = typeof body.name === "string" ? body.name.trim() : "";
+    const email = typeof body.email === "string" ? body.email.trim() : "";
+
+    return { name, email };
+}
+
 // PART A - Traditional HTML form submission
 app.post("/readCustomerInfoAndRespond", (req, res) => {
-    const name = req.body.name;
-    const email = req.body.email;
+    const { name, email } = getCustomerInput(req.body);
+
+    if (!name || !email) {
+        return res.status(400).send("Name and email are required.<br><br><a href=\"/\">Go Back</a>");
+    }
 
     res.send(
         "Welcome " +
@@ -29,8 +40,13 @@ app.post("/readCustomerInfoAndRespond", (req, res) => {
 
 // PART B - REST / JSON endpoint
 app.post("/api/customer", (req, res) => {
-    const name = req.body.name;
-    const email = req.body.email;
+    const { name, email } = getCustomerInput(req.body);
+
+    if (!name || !email) {
+        return res.status(400).json({
+            error: "Name and email are required.",
+        });
+    }
 
     res.json({
         message: "Welcome " + name,

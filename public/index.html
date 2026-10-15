@@ -175,30 +175,37 @@
             <button id="submitBtn" type="submit">REST Submit</button>
         </form>
 
-        <div id="result"></div>
+        <div id="result" aria-live="polite"></div>
     </section>
 
     <script>
         document.getElementById("restForm").addEventListener("submit", async (event) => {
             event.preventDefault();
 
-            const response = await fetch("/api/customer", {
-                method: "POST",
+            const result = document.getElementById("result");
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            try {
+                const response = await fetch("/api/customer", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: document.getElementById("name").value,
+                        email: document.getElementById("email").value
+                    })
+                });
 
-                body: JSON.stringify({
-                    name: document.getElementById("name").value,
-                    email: document.getElementById("email").value
-                })
-            });
+                const data = await response.json();
 
-            const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || "The request could not be completed.");
+                }
 
-            document.getElementById("result").innerHTML =
-                data.message + "<br>We will contact you at " + data.email;
+                result.textContent = `${data.message} We will contact you at ${data.email}`;
+            } catch (error) {
+                result.textContent = `Unable to submit the form: ${error.message}`;
+            }
         });
     </script>
 
