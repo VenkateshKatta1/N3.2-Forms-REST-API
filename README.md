@@ -21,6 +21,47 @@ This project demonstrates two ways to submit customer information from a web pag
 
 3. Open [http://localhost:8080](http://localhost:8080) in a browser.
 
+## Deploy to Google Cloud Run
+
+This application can be deployed from the project directory using Google Cloud Run.
+
+1. Open Terminal and enter the project folder:
+
+   ```bash
+   cd /Users/disha_deshmukh/MS/Fall26/CS651/Assignments/Lab_N3/N3.2-Forms-REST-API
+   ```
+
+2. Log in to Google Cloud and select the project:
+
+   ```bash
+   gcloud auth login
+   gcloud config set project gen-lang-client-0800605818
+   ```
+
+3. Deploy the application:
+
+   ```bash
+   gcloud run deploy n32-forms-rest-api \
+     --source . \
+     --project gen-lang-client-0800605818 \
+     --region us-central1 \
+     --allow-unauthenticated
+   ```
+
+4. Open the service URL printed by the deployment command.
+
+Cloud Run provides the port through the `PORT` environment variable, which this application uses automatically.
+
+### Delete the Cloud Run Service
+
+To terminate the deployed service:
+
+```bash
+gcloud run services delete n32-forms-rest-api \
+  --project gen-lang-client-0800605818 \
+  --region us-central1
+```
+
 ## Application Sections
 
 ### Part A: Traditional HTML Form
@@ -53,6 +94,10 @@ Example response:
 ### REST API Response
 
 ![REST API response](<images/N3.2_web_REST-API-fatch().png>)
+
+### Google Cloud Run Deployment
+
+![Google Cloud Run deployment](images/LabN3.2_gcloud_deploy.png)
 
 ## Technologies
 
