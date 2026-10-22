@@ -104,3 +104,25 @@ Example response:
 - Node.js
 - Express
 - HTML, CSS, and JavaScript
+
+## Exercise G2.1: Google App Engine Deployment
+
+The Node.js Express application was deployed to Google App Engine using the
+Google Cloud CLI.
+
+```bash
+gcloud app deploy
+gcloud app browse
+```
+
+GAE application URL:
+
+<https://gen-lang-client-0800605818.uc.r.appspot.com>
+
+### G2.1 Screenshots
+
+![G2.1 web application running on GAE](images/GAE_web_app.png)
+
+![G2.1 GAE deployment URL](images/GAE_web_deploy_url.png)
+
+![G2.1 Google Cloud Console deployment](images/GAE_deploy.png)
